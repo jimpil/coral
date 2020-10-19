@@ -42,7 +42,7 @@ This is the function your local consuming logic will call
 ```clj
 ;; this will unblock whoever is waiting on 
 ;; the promise associated with this id (see above)
-(cc/deliver-for-id corr "some-UUID" :whatever) ;; => true
+(cc/deliver-for-id corr "some-UUID" :whatever) ;; => true (or exception if the 5 seconds have passed)
 ```
 
 ## Safety vs Performance
