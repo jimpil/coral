@@ -2,10 +2,12 @@
 
 ## What
 A tiny Clojure library for (in-process) correlation of IDs 
-(e.g. request/reply scenarios in distributed systems).
+(e.g. request/response scenarios in distributed systems).
 Started out as a Kafka helper, but quickly realised there is nothing 
-Kafka-specific here (i.e. the system is oblivious to potential taps/sinks).
-As long as your producers/consumers are in-process, you can use this.  
+Kafka-specific here (i.e. the system is oblivious to potential taps/sinks). 
+
+The core object (`coral.core.Correlator`) is essentially a custom wrapper around 
+`core.cache` impls (wrapped in `atom`), and therefore can be considered stateful. 
 
 ## Where
 ;; TODO
@@ -50,7 +52,7 @@ something needs to be done with ids that, for whatever reason, were never 'corre
 What should happen in case the response fails to come back? Either something needs to
 keep track of those (non-trivial), or some automatic measure should be put in place.
 A ttl-cache is simply perfect for this (avoids memory leaks), and fits nicely with the
-aforementioned request/response scenario, where you would have a good idea how long the 
+aforementioned request/response scenario, where you would have a good idea of how long the 
 TTL threshold should be (i.e. your own end-to-end latency limits, or you may be in a
  position to know how long your clients are willing/going to wait).
 
