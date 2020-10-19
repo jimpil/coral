@@ -5,6 +5,8 @@
             [coral.protocol :as proto])
   (:import (clojure.lang ExceptionInfo)))
 
+;; will work with any type of caching strategy,
+;; but TTL is much preferable
 (deftype Correlator [cache-atom]
   proto/ICorrelator
 
