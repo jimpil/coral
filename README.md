@@ -44,7 +44,7 @@ This is the function your local consuming logic will call
 ```
 
 ## Safety vs Performance
-AKA the 'why not use a ConcurrentHashMap' question. The reasons is simple - 
+A.K.A. the 'why not use a ConcurrentHashMap' question. The reasons is simple - 
 something needs to be done with ids that, for whatever reason, were never 'correlated' 
 (i.e. delivered). Think about the typical web-server request/response scenario. 
 What should happen in case the response fails to come back? Either something needs to
