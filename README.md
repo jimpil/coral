@@ -4,10 +4,14 @@
 A tiny Clojure library for (in-process) correlation of IDs 
 (e.g. request/response scenarios in distributed systems).
 Started out as a Kafka helper, but quickly realised there is nothing 
-Kafka-specific here (i.e. the system is oblivious to potential taps/sinks). 
+Kafka-specific here (i.e. `coral` is oblivious to potential taps/sinks, 
+and has no opinions about how the IDs are conveyed (e.g. HTTP-headers, Kafka-headers etc).  
 
 The core object (`coral.core.Correlator`) is essentially a custom wrapper around 
-`core.cache` impls (wrapped in `atom`), and therefore can be considered stateful. 
+`core.cache` impls (wrapped in `atom`), and therefore can be considered stateful.
+Given how hard it is to use `core.cache` correctly, its usage in `coral` is limited to 
+`lookup-or-miss` (thus adhering to best practises). If you're not sure why this matters,
+see the last paragraph [here](https://github.com/clojure/core.cache#clojurecorecache). 
 
 ## Where
 ;; TODO
@@ -33,7 +37,7 @@ This is the function your local producing logic will call
 ```clj
 (-> corr
     (cc/id->promise "some-UUID") ;; => a promise 
-    (deref 5000 :timeout))
+    (deref 5000 :timeout))       ;; don't deref w/o a timeout
 ```
 
 ### deliver-for-id \[correlator id v\]
